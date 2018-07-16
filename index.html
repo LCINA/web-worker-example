@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+  <code></code>
+  <script>
+    var worker = new Worker('./worker-example.js', {
+      name: 'first-worker'
+    });
+    worker.postMessage({
+      description: '发送请求',
+      url: './data/1.json'
+    });
+    worker.onmessage = function (event) {
+      console.log('Received message ' + event.data);
+      var codeEle = document.getElementsByTagName('code')[0];
+      if(Object.getOwnPropertyNames(event.data).length) {
+        codeEle.innerHTML = event.data;
+      } else {
+        codeEle.innerHTML = '未收到数据';
+      }
+      worker.terminate();
+    }
+  </script>
+</body>
+
+</html>
