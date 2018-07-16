@@ -5,9 +5,9 @@ self.addEventListener('message', function (e) {
     url: url
   }).then(data => {
     self.postMessage('原始数据:\n ' + data);
+    self.close();
   });
 }, false);
-
 function request(opt) {
   opt.method = (opt.method || 'GET').toUpperCase();
   opt.url = opt.url || '';
